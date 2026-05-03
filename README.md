@@ -31,9 +31,11 @@ Gradient Boosted Trees optimize in function space by training shallow trees sequ
 
 ## 📊 Deep-Dive Performance Analysis (100% Data Scale)
 
-![Target Distribution](Figure 1 - Class Distribution of HIGGS Dataset.png)
-![Training Time Scalability](Figure 2 - Traininf Time vs. Data Scale.png)
-![Final Accuracy](Figure 3 - Final Model Accuracy Comparison (100% Scale).png)
+<img src="Figure 1 - Class Distribution of HIGGS Dataset.png" alt="Target Distribution">
+
+<img src="Figure 2 - Traininf Time vs. Data Scale.png" alt="Training Time Scalability">
+
+<img src="Figure 3 - Final Model Accuracy Comparison (100% Scale).png" alt="Final Accuracy">
 
 The pipeline was tested across 20%, 50%, and 100% data scales to measure exponential latency growth.
 
