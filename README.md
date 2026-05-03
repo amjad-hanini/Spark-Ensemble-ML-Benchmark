@@ -93,6 +93,14 @@ docker build -t spark-ml-benchmark .
 docker run spark-ml-benchmark
 ```
 
+## 📚 Core Literature & Acknowledgements
+
+The theoretical framework and distributed computing paradigms evaluated in this benchmark are grounded in the following foundational computer science literature:
+
+* **Parallel Random Forest Architecture:** Chen, J., Li, K., Tang, Z., Bilal, K., Yu, S., Weng, C., & Li, K. (2017). "A parallel random forest algorithm for big data in a spark cloud computing environment." *IEEE Transactions on Parallel and Distributed Systems, 28*(4), 919-933.
+* **Gradient Boosting Mechanics:** Chen, T., & Guestrin, C. (2016). "XGBoost: A Scalable Tree Boosting System." *Proceedings of the 22nd ACM SIGKDD*.
+* **Framework Documentation:** [Apache Spark MLlib Official Guide](https://spark.apache.org/docs/latest/ml-guide.html).
+
 ## 👨‍💻 Author
 
 **Amjad Hanini**
