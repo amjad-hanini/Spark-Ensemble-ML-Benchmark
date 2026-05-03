@@ -16,7 +16,7 @@ graph TD;
     E --> F;
     F --> G[(Results & Benchmark Logs)];
     G --> H((Gen AI Evaluator Agent \n LLM Integration));
-    H --> I[Executive Summary Generation];
+    H --> I[MLflow Experiment Tracking & Reporting];
 ```
 
 ## 🧠 Theoretical Background: The Distributed Systems Paradigm
@@ -65,32 +65,32 @@ To further harden this pipeline for enterprise deployments, the following archit
 * **☁️ Cloud & Databricks Migration:** Moving from local PySpark execution to a managed **Databricks workspace** utilizing the Databricks CLI and deploying the pipeline onto an **AWS EMR (Elastic MapReduce)** cluster.
 * **🌊 PySpark Structured Streaming:** Transitioning from batch ingestion of the HIGGS dataset to a real-time Kafka stream, evaluating how RF and GBT handle micro-batch inference latency under load.
 * **🧠 Large-Scale Deep Learning Integration:** Introducing a **Distributed PyTorch** node to the benchmark to compare traditional ensemble methods against modern neural network architectures.
-* **🔐 Analytics & Governance:** Implementing strict data governance logging and MLflow tracking to monitor model drift and hyperparameter versioning.
 
-## 💻 Tech Stack
+## 💻 Enterprise Tech Stack
 
 * **Distributed Framework:** Apache Spark (PySpark 4.0.2), MapReduce Paradigms
-* **Machine Learning:** PySpark MLlib
+* **Machine Learning:** PySpark MLlib (Ensemble Methods)
+* **MLOps & Governance:** MLflow (Autonomous Experiment Tracking & Parameter Logging)
+* **DevOps & Containerization:** Docker (Isolated Environment Execution)
 * **Generative AI:** LLM Prompt Engineering for Agentic Reporting
-* **Data Manipulation:** Pandas, NumPy
-* **Visualization:** Matplotlib, Mermaid.js
+* **Data Manipulation & Visualization:** Pandas, Matplotlib, Mermaid.js
 
 ## 💻 Quickstart
 
-**1. Clone the repository:**
+**Option A: Standard Execution**
 ```bash
 git clone [https://github.com/amjad-hanini/Spark-Ensemble-ML-Benchmark.git](https://github.com/amjad-hanini/Spark-Ensemble-ML-Benchmark.git)
 cd Spark-Ensemble-ML-Benchmark
-```
-
-**2. Install dependencies:**
-```bash
 pip install -r requirements.txt
-```
-
-**3. Execute the Pipeline:**
-```bash
 python benchmark.py
+```
+*To view the MLflow MLOps dashboard, run `mlflow ui` in your terminal after execution and navigate to `http://localhost:5000`.*
+
+**Option B: Docker Containerized Execution**
+*(Requires Docker to be installed. Bypasses the need to install Spark/Java locally).*
+```bash
+docker build -t spark-ml-benchmark .
+docker run spark-ml-benchmark
 ```
 
 ## 👨‍💻 Author
