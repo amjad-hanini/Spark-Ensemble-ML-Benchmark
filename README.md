@@ -35,7 +35,7 @@ Gradient Boosted Trees optimize in function space by training shallow trees sequ
 
 <img src="Figure 2 - Traininf Time vs. Data Scale.png" alt="Training Time Scalability">
 
-<img src="Figure 3 - Final Model Accuracy Comparison (100% Scale).png" alt="Final Accuracy">
+<img width="622" height="451" alt="Figure 3 - Final Model Accuracy Comparison (100% Scale)" src="https://github.com/user-attachments/assets/2c8bc526-4203-4eb6-9140-ad8dbe47408b" />
 
 The pipeline was tested across 20%, 50%, and 100% data scales to measure exponential latency growth.
 
