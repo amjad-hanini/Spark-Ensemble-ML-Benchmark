@@ -1,0 +1,22 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Data sets
+*.csv
+*.gz
+HIGGS.csv
+
+# IDEs
+.vscode/
+.idea/
+.ipynb_checkpoints/
