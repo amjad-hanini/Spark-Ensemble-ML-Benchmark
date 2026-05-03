@@ -31,14 +31,13 @@ Gradient Boosted Trees optimize in function space by training shallow trees sequ
 
 ## 📊 Deep-Dive Performance Analysis (100% Data Scale)
 
-<img width="678" height="470" alt="Figure 1 - Class Distribution of HIGGS Dataset" src="https://github.com/user-attachments/assets/a063d3cc-4e9c-4b0f-800b-036a0956e0f8" />
+<img src="Figure 1 - Class Distribution of HIGGS Dataset.png" alt="Target Distribution">
 <br><br>
 
-<img width="859" height="547" alt="Figure 2 - Traininf Time vs  Data Scale" src="https://github.com/user-attachments/assets/f11776fb-9a8e-49df-aaca-741a6910f1d3" />
+<img src="Figure 2 - Traininf Time vs. Data Scale.png" alt="Training Time Scalability">
 <br><br>
 
-<img width="622" height="451" alt="Figure 3 - Final Model Accuracy Comparison (100% Scale)" src="https://github.com/user-attachments/assets/2c8bc526-4203-4eb6-9140-ad8dbe47408b" />
-<br><br>
+<img src="Figure 3 - Final Model Accuracy Comparison (100% Scale).png" alt="Final Accuracy">
 
 The pipeline was tested across 20%, 50%, and 100% data scales to measure exponential latency growth.
 
@@ -95,9 +94,11 @@ docker run spark-ml-benchmark
 
 ## 📚 Core Literature & Acknowledgements
 
-The theoretical framework and distributed computing paradigms evaluated in this benchmark are grounded in the following foundational computer science literature:
+The theoretical framework, MLOps architecture, and distributed computing paradigms evaluated in this benchmark are grounded in the following foundational computer science literature:
 
-* **Parallel Random Forest Architecture:** Chen, J., Li, K., Tang, Z., Bilal, K., Yu, S., Weng, C., & Li, K. (2017). "A parallel random forest algorithm for big data in a spark cloud computing environment." *IEEE Transactions on Parallel and Distributed Systems, 28*(4), 919-933.
+* **Dataset Origin:** Baldi, P., Sadowski, P., & Whiteson, D. (2014). "Searching for exotic particles in high-energy physics with deep learning." *Nature Communications*, 5(1), 4308.
+* **MLOps / MLflow Architecture:** Zaharia, M., Chen, A., Davidson, A., Ghodsi, A., Hong, S. A., Konwinski, A., ... & Wendell, P. (2018). "Accelerating the Machine Learning Lifecycle with MLflow." *IEEE Data Eng. Bull.*, 41(4), 39-45.
+* **Parallel Random Forest:** Chen, J., Li, K., Tang, Z., Bilal, K., Yu, S., Weng, C., & Li, K. (2017). "A parallel random forest algorithm for big data in a spark cloud computing environment." *IEEE Transactions on Parallel and Distributed Systems, 28*(4), 919-933.
 * **Gradient Boosting Mechanics:** Chen, T., & Guestrin, C. (2016). "XGBoost: A Scalable Tree Boosting System." *Proceedings of the 22nd ACM SIGKDD*.
 * **Framework Documentation:** [Apache Spark MLlib Official Guide](https://spark.apache.org/docs/latest/ml-guide.html).
 
