@@ -2,6 +2,7 @@ import os
 import time
 import pandas as pd
 import matplotlib.pyplot as plt
+import mlflow
 from pyspark.sql import SparkSession
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.classification import RandomForestClassifier, GBTClassifier
@@ -12,20 +13,13 @@ def ensure_dir(directory):
         os.makedirs(directory)
 
 def generate_llm_executive_summary(results):
-    """
-    GEN AI INTEGRATION HOOK:
-    Formats the benchmark metrics into a prompt intended for an LLM (e.g., Llama 3, Gemini, OpenAI).
-    In a full production environment, this text is sent via API to generate an autonomous MLOps report.
-    """
     print("\n" + "="*50)
     print("🤖 INITIATING GEN AI AUTONOMOUS EVALUATION AGENT")
     print("="*50)
-    
     rf_acc = results['rf_acc'][-1] * 100
     gbt_acc = results['gbt_acc'][-1] * 100
     rf_time = results['rf_time'][-1]
     gbt_time = results['gbt_time'][-1]
-    
     prompt = f"""
     [SYSTEM INSTRUCTION]
     You are a Lead MLOps Engineer Agent. Analyze the following Apache Spark distributed training logs.
@@ -38,7 +32,6 @@ def generate_llm_executive_summary(results):
     [TASK]
     Generate a 3-sentence executive summary detailing the ROI of compute time versus accuracy gains.
     """
-    
     print("\n[Generated LLM Prompt Payload]")
     print(prompt)
     print("\n[Mock LLM Response]")
@@ -48,27 +41,26 @@ def generate_llm_executive_summary(results):
 def run_benchmark(algorithm, dataset, train_ratio, target_col):
     sampled_data = dataset.sample(withReplacement=False, fraction=train_ratio, seed=42)
     train, test = sampled_data.randomSplit([0.8, 0.2], seed=42)
-
     start_time = time.time()
     model = algorithm.fit(train)
     end_time = time.time()
-
     predictions = model.transform(test)
     evaluator = MulticlassClassificationEvaluator(labelCol=target_col, metricName="accuracy")
     accuracy = evaluator.evaluate(predictions)
-
     return end_time - start_time, accuracy
 
 def main():
     print("Initializing Distributed Benchmark Pipeline...")
     ensure_dir("figures")
+    
+    # Initialize MLflow Experiment Tracking
+    mlflow.set_experiment("Spark_Ensemble_Benchmark")
 
     spark = SparkSession.builder \
         .appName("RF_vs_GBT_Scalability") \
         .config("spark.driver.memory", "10g") \
         .config("spark.executor.memory", "10g") \
         .getOrCreate()
-    
     spark.sparkContext.setLogLevel("ERROR")
 
     file_path = "HIGGS.csv"
@@ -79,34 +71,51 @@ def main():
 
     print("Loading Data into Spark RDDs...")
     df = spark.read.csv(file_path, header=False, inferSchema=True)
-    
     old_columns = df.columns
     target_col = "label"
     df = df.withColumnRenamed(old_columns[0], target_col)
 
-    # Preprocessing
     print("Executing Vector Assembler...")
     feature_cols = [c for c in df.columns if c != target_col]
     assembler = VectorAssembler(inputCols=feature_cols, outputCol="features")
     df_clean = df.na.drop()
     data = assembler.transform(df_clean).select("features", target_col)
 
-    # Experiment Loop
     scales = [0.2, 0.5, 1.0]
     results = {'scale': [], 'rf_time': [], 'gbt_time': [], 'rf_acc': [], 'gbt_acc': []}
 
     for scale in scales:
         print(f"\n--- Processing Data Scale: {scale * 100}% ---")
 
-        print("Training Random Forest...")
-        rf = RandomForestClassifier(labelCol=target_col, featuresCol="features", numTrees=20, maxDepth=5)
-        rf_time, rf_acc = run_benchmark(rf, data, scale, target_col)
-        print(f"RF Finished in {rf_time:.2f}s | Acc: {rf_acc:.4f}")
+        # MLflow Run: Random Forest
+        with mlflow.start_run(run_name=f"RandomForest_{int(scale*100)}pct"):
+            print("Training Random Forest...")
+            rf = RandomForestClassifier(labelCol=target_col, featuresCol="features", numTrees=20, maxDepth=5)
+            rf_time, rf_acc = run_benchmark(rf, data, scale, target_col)
+            print(f"RF Finished in {rf_time:.2f}s | Acc: {rf_acc:.4f}")
+            
+            # Log Parameters & Metrics to MLflow Dashboard
+            mlflow.log_param("algorithm", "Random Forest")
+            mlflow.log_param("data_scale", scale)
+            mlflow.log_param("numTrees", 20)
+            mlflow.log_param("maxDepth", 5)
+            mlflow.log_metric("training_time_seconds", rf_time)
+            mlflow.log_metric("accuracy", rf_acc)
 
-        print("Training Gradient Boosted Trees...")
-        gbt = GBTClassifier(labelCol=target_col, featuresCol="features", maxIter=20, maxDepth=5)
-        gbt_time, gbt_acc = run_benchmark(gbt, data, scale, target_col)
-        print(f"GBT Finished in {gbt_time:.2f}s | Acc: {gbt_acc:.4f}")
+        # MLflow Run: Gradient Boosted Trees
+        with mlflow.start_run(run_name=f"GBT_{int(scale*100)}pct"):
+            print("Training Gradient Boosted Trees...")
+            gbt = GBTClassifier(labelCol=target_col, featuresCol="features", maxIter=20, maxDepth=5)
+            gbt_time, gbt_acc = run_benchmark(gbt, data, scale, target_col)
+            print(f"GBT Finished in {gbt_time:.2f}s | Acc: {gbt_acc:.4f}")
+            
+            # Log Parameters & Metrics to MLflow Dashboard
+            mlflow.log_param("algorithm", "Gradient Boosted Trees")
+            mlflow.log_param("data_scale", scale)
+            mlflow.log_param("maxIter", 20)
+            mlflow.log_param("maxDepth", 5)
+            mlflow.log_metric("training_time_seconds", gbt_time)
+            mlflow.log_metric("accuracy", gbt_acc)
 
         results['scale'].append(scale * 100)
         results['rf_time'].append(rf_time)
@@ -114,9 +123,7 @@ def main():
         results['rf_acc'].append(rf_acc)
         results['gbt_acc'].append(gbt_acc)
 
-    # Gen AI Reporting Hook
     generate_llm_executive_summary(results)
-
     spark.stop()
 
 if __name__ == "__main__":
