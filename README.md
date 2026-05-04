@@ -8,20 +8,41 @@
 
 # 🚀 Distributed ML Benchmark: Bagging vs. Boosting & Agentic LLM Evaluation
 
+> **Disclaimer:** This project is produced solely for educational and academic research purposes. The performance metrics, ROI calculations, and architectural recommendations presented are based on controlled benchmark environments and do not constitute formal enterprise consulting advice.
+
 An enterprise-grade Big Data pipeline built on Apache Spark to benchmark the scalability, network I/O latency, and predictive performance of Random Forest (Bagging) versus Gradient Boosted Trees (Boosting) on the 11-million instance HIGGS dataset. 
 
 This project goes beyond simple accuracy metrics to analyze the distributed systems architecture underlying these algorithms, featuring an autonomous Gen AI (LLM) agent that interprets Spark execution logs to generate executive insights.
 
 ## 📑 Table of Contents
+- [Repository Structure](#-repository-structure)
 - [Enterprise Architecture](#-enterprise-architecture)
 - [Theoretical Background](#-theoretical-background-the-distributed-systems-paradigm)
 - [Deep-Dive Performance Analysis](#-deep-dive-performance-analysis-100-data-scale)
 - [Gen AI Integration](#-gen-ai-integration-autonomous-log-evaluation)
+- [Advanced Roadmap](#-advanced-roadmap--future-scaling)
 - [Enterprise Tech Stack](#-enterprise-tech-stack)
 - [Quickstart & Deployment](#-quickstart)
 - [Core Literature](#-core-literature--acknowledgements)
+- [Citation](#-citation)
 
 ---
+
+## 📂 Repository Structure
+
+```text
+Spark-Ensemble-ML-Benchmark/
+├── benchmark.py           # Core PySpark execution and MLflow logging script
+├── requirements.txt       # Python dependencies
+├── Dockerfile             # Containerization blueprint
+├── .dockerignore          # Docker build exclusions
+├── .gitignore             # Git tracking exclusions
+├── README.md              # Project documentation
+└── figures/               # Generated performance and scalability plots
+    ├── Figure1.png        
+    ├── Figure2.png        
+    └── Figure3.png        
+```
 
 ## 🏗️ Enterprise Architecture
 
@@ -81,9 +102,12 @@ Inspired by modern MLOps, this pipeline features a **Gen AI Analysis Hook**. Ins
 
 To further harden this pipeline for enterprise deployments, the following architectures are scoped for future iterations:
 
-* **☁️ Cloud & Databricks Migration:** Moving from local PySpark execution to a managed **Databricks workspace** utilizing the Databricks CLI and deploying the pipeline onto an **AWS EMR (Elastic MapReduce)** cluster.
-* **🌊 PySpark Structured Streaming:** Transitioning from batch ingestion of the HIGGS dataset to a real-time Kafka stream, evaluating how RF and GBT handle micro-batch inference latency under load.
-* **🧠 Large-Scale Deep Learning Integration:** Introducing a **Distributed PyTorch** node to the benchmark to compare traditional ensemble methods against modern neural network architectures.
+- [x] **Phase 1: Local Baseline** — Establish PySpark RDD/DataFrame benchmarks for RF and GBT.
+- [x] **Phase 2: MLOps Integration** — Implement MLflow for autonomous parameter tracking and metric logging.
+- [x] **Phase 3: Containerization** — Build Docker environment to bypass local JVM/Spark dependency nightmares.
+- [ ] **Phase 4: Cloud Migration** — Deploy the containerized pipeline onto an AWS EMR (Elastic MapReduce) cluster or Databricks workspace.
+- [ ] **Phase 5: Structured Streaming** — Transition from batch ingestion to a real-time Kafka stream to evaluate micro-batch inference latency.
+- [ ] **Phase 6: Deep Learning Baseline** — Introduce a Distributed PyTorch node to compare ensemble methods against modern neural networks.
 
 ## 💻 Enterprise Tech Stack
 
@@ -126,6 +150,19 @@ The theoretical framework, MLOps architecture, and distributed computing paradig
 * **Parallel Random Forest:** Chen, J., Li, K., Tang, Z., Bilal, K., Yu, S., Weng, C., & Li, K. (2017). "A parallel random forest algorithm for big data in a spark cloud computing environment." *IEEE Transactions on Parallel and Distributed Systems, 28*(4), 919-933.
 * **Gradient Boosting Mechanics:** Chen, T., & Guestrin, C. (2016). "XGBoost: A Scalable Tree Boosting System." *Proceedings of the 22nd ACM SIGKDD*.
 * **Framework Documentation:** [Apache Spark MLlib Official Guide](https://spark.apache.org/docs/latest/ml-guide.html).
+
+## 📝 Citation
+
+If you use this benchmark or methodology in academic research or enterprise testing, please cite:
+
+```bibtex
+@misc{hanini2026sparkbenchmark,
+  title={Distributed ML Benchmark: Bagging vs. Boosting & Agentic LLM Evaluation in Apache Spark},
+  author={Hanini, Amjad},
+  year={2026},
+  note={Available at: [https://github.com/amjad-hanini/Spark-Ensemble-ML-Benchmark](https://github.com/amjad-hanini/Spark-Ensemble-ML-Benchmark)}
+}
+```
 
 ## 👨‍💻 Author
 
