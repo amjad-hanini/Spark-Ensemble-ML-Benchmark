@@ -1,8 +1,27 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Apache_Spark-4.0.2-E25A1C?logo=apachespark&logoColor=white" alt="Spark">
+  <img src="https://img.shields.io/badge/MLflow-Tracking-0194E2?logo=mlflow&logoColor=white" alt="MLflow">
+  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/License-MIT-success" alt="License">
+</p>
+
 # 🚀 Distributed ML Benchmark: Bagging vs. Boosting & Agentic LLM Evaluation
 
 An enterprise-grade Big Data pipeline built on Apache Spark to benchmark the scalability, network I/O latency, and predictive performance of Random Forest (Bagging) versus Gradient Boosted Trees (Boosting) on the 11-million instance HIGGS dataset. 
 
 This project goes beyond simple accuracy metrics to analyze the distributed systems architecture underlying these algorithms, featuring an autonomous Gen AI (LLM) agent that interprets Spark execution logs to generate executive insights.
+
+## 📑 Table of Contents
+- [Enterprise Architecture](#-enterprise-architecture)
+- [Theoretical Background](#-theoretical-background-the-distributed-systems-paradigm)
+- [Deep-Dive Performance Analysis](#-deep-dive-performance-analysis-100-data-scale)
+- [Gen AI Integration](#-gen-ai-integration-autonomous-log-evaluation)
+- [Enterprise Tech Stack](#-enterprise-tech-stack)
+- [Quickstart & Deployment](#-quickstart)
+- [Core Literature](#-core-literature--acknowledgements)
+
+---
 
 ## 🏗️ Enterprise Architecture
 
@@ -77,6 +96,11 @@ To further harden this pipeline for enterprise deployments, the following archit
 
 ## 💻 Quickstart
 
+> **⚠️ Minimum System Requirements**
+> To process the full 100% data scale (11,000,000 instances), ensure your environment meets the following specifications:
+> - **CPU:** >= 4 Cores
+> - **RAM:** >= 16 GiB (The PySpark session is configured to request 10GB for the driver and 10GB for the executor).
+
 **Option A: Standard Execution**
 ```bash
 git clone [https://github.com/amjad-hanini/Spark-Ensemble-ML-Benchmark.git](https://github.com/amjad-hanini/Spark-Ensemble-ML-Benchmark.git)
@@ -106,4 +130,7 @@ The theoretical framework, MLOps architecture, and distributed computing paradig
 ## 👨‍💻 Author
 
 **Amjad Hanini**
-* GitHub: [@amjad-hanini](https://github.com/amjad-hanini)
+<p>
+  <a href="https://github.com/amjad-hanini"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
+  <a href="https://linkedin.com/in/amjad-hanini"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+</p>
